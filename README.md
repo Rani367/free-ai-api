@@ -1,36 +1,67 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Free AI API
 
-## Getting Started
+A simple, free AI chat API powered by Groq's LLaMA 3.3 70B model.
 
-First, run the development server:
+## Live API
+
+**Endpoint:** `https://free-ai-api-three.vercel.app/api/chat`
+
+## Usage
+
+Send a POST request with a JSON body containing your message:
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+curl -X POST https://free-ai-api-three.vercel.app/api/chat \
+  -H "Content-Type: application/json" \
+  -d '{"message": "Your question here"}'
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### Response
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```json
+{
+  "response": "AI response text",
+  "model": "llama-3.3-70b-versatile",
+  "usage": {
+    "total_tokens": 52,
+    "total_time": 0.014
+  }
+}
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Examples
 
-## Learn More
+**JavaScript/TypeScript:**
+```javascript
+const response = await fetch('https://free-ai-api-three.vercel.app/api/chat', {
+  method: 'POST',
+  headers: { 'Content-Type': 'application/json' },
+  body: JSON.stringify({ message: 'Hello!' })
+});
+const data = await response.json();
+console.log(data.response);
+```
 
-To learn more about Next.js, take a look at the following resources:
+**Python:**
+```python
+import requests
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+response = requests.post(
+    'https://free-ai-api-three.vercel.app/api/chat',
+    json={'message': 'Hello!'}
+)
+print(response.json()['response'])
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Local Development
 
-## Deploy on Vercel
+1. Clone the repository
+2. Install dependencies: `npm install`
+3. Create `.env.local` with your Groq API key:
+   ```
+   GROQ_API_KEY=your_api_key_here
+   ```
+4. Run: `npm run dev`
+5. API available at: `http://localhost:3000/api/chat`
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Get your free Groq API key at: https://console.groq.com/keys
